@@ -1,10 +1,7 @@
 /********************************************************************************************
  * 
- * Purpose : UC1 : Create a Project to learn Spring Concepts 
- * 		 		   Use Spring Initializer to Create Project 
- * 				   - Here Development is done using VS Code IDE(Spring Boot Extension Pack)
- * 				   - Note - Important to add the Dependencies and the Property in order to 
- * 							Start Spring Application
+ * Purpose : UC2 : Add Logger to Log Messages
+ * 				   - Use Built In SLF4J – Simple Logging Framework
  * 
  * @author Krunal Lad
  * @since 08-08-2021
@@ -12,6 +9,8 @@
  *********************************************************************************************/
 package com.demo.springconcepts;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import com.demo.springconcepts.component.DemoBean;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -20,17 +19,21 @@ import org.springframework.context.ApplicationContext;
 @SpringBootApplication
 public class SpringConceptsApplication {
 	
+	public static final Logger logger = LoggerFactory.getLogger(SpringConceptsApplication.class);
 	/**
-	 * Purpose : To verify that run method is internally called during launch of project and it returns data in 
-	 * 			 form of IOC Container also known as Application Context ..It internally create objects for the class 
+	 *  Purpose : Printing the logging message based on the pattern provided in logback.xml
+	 * 			  Since logger.debug is mentioned, so it will display the logging message from and above
+	 * 			  the DEBUG level.
 	 * 		
 	 * @param args
 	 */
 	public static void main(String[] args) {
-		System.out.println("Welcome to Spring Concepts Demo");
+		logger.debug("Welcome to Spring Concepts Demo");
 		ApplicationContext context = SpringApplication.run(SpringConceptsApplication.class, args);
 		DemoBean demoBean = context.getBean(DemoBean.class);
 		System.out.println("Demo Bean = "+demoBean.toString());
+		logger.debug("Checking Context: {}", context.getBean(DemoBean.class));
+		logger.debug("\n*** Example Using @Autowire annotation on property ***");
 	}
 
 }
